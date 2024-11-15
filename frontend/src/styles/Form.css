@@ -1,0 +1,13 @@
+.form-bg,.my-auto{
+    background: rgba(133, 126, 126, 0.3);
+    border-radius: 35% 40% 50% 60%;
+    backdrop-filter: blur(15px);
+    padding: 40px 80px;
+    border: 1px solid gray;
+   
+}
+.my-auto{
+min-width: 500px;
+min-height: 450px;
+}
+

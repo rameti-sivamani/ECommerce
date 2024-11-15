@@ -1,0 +1,43 @@
+.footer {
+    background-color:#a3712f;
+    color: #fff;
+    padding: 20px;
+    text-align: left;
+    width: 100%; /* Ensure it takes the full width */
+}
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20px;
+   
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px; /* Ensures that sections have a minimum width */
+   
+}
+
+.footer-section h2 {
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    margin: 5px 0;
+    cursor: pointer; /* Makes it clear that these are clickable */
+}
+
+.footer-section p:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 0;
+}
+.footer-bottom p{
+    margin-bottom: 0;
+}

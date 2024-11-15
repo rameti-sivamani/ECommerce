@@ -1,0 +1,32 @@
+.help-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .help-section {
+    margin-bottom: 20px;
+  }
+  
+  .help-section h2 {
+    margin-top: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+  

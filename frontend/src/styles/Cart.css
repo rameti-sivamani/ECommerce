@@ -1,0 +1,29 @@
+.cart-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .cart-items {
+    border-right: 1px solid #ccc; /* Optional: to visually separate sections */
+    padding-right: 20px;
+
+  }
+  
+  .cart-summary {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    border-left: 1px solid #ccc; /* Optional: to visually separate sections */
+  }
+  
+button{
+    padding: 10px;
+    margin: 5px 3px;
+    min-width: 40px;
+    background: #a96969;
+}
+  

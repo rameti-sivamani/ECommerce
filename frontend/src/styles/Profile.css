@@ -1,0 +1,100 @@
+/* Main profile container */
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile header */
+.profile-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Row layout for name */
+.name-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0; /* No margin for smoother flow */
+}
+
+.name-item {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.name-item label {
+    font-weight: bold;
+    color: #666;
+}
+
+.name-item p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Info row for other details */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0; /* No margin for smoother flow */
+}
+
+.info-row div {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.info-row label {
+    font-weight: bold;
+    color: #666;
+}
+
+.info-row p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Quotes section */
+.profile-quotes {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.profile-quotes h2 {
+    font-size: 24px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.profile-quotes p {
+    font-size: 18px;
+    font-style: italic;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.profile-quotes p::before, .profile-quotes p::after {
+    content: '"';
+}
+
+.profile-container h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+    .name-row, .info-row {
+        flex-direction: column;
+    }
+
+    .name-item, .info-row div {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}
