@@ -36,4 +36,30 @@ This project is a full-stack e-commerce web application developed using Spring B
 
 
 <h2>Screenshots</h2>
+<li>Home Page After Login</li>
+<br>
 
+![Screenshot 2024-09-27 103316](https://github.com/user-attachments/assets/4e063e98-8f00-4aff-81eb-5c1c7162ec16)
+
+
+<li>Men's Wear Page</li>
+<br>
+
+![Screenshot 2024-09-27 102159](https://github.com/user-attachments/assets/23e6f51e-40b3-472e-8dfb-4a30b215acc0)
+
+<li>Women's Wear</li>
+<br>
+
+![Screenshot 2024-09-27 102225](https://github.com/user-attachments/assets/dfed2def-4739-4f77-8a5c-4cf25325ee8a)
+
+<li>Kid's Wear</li>
+<br>
+
+![Screenshot 2024-09-27 102243](https://github.com/user-attachments/assets/707a7c54-5e34-4cd0-b42f-a24265047d32)
+
+
+<h2>Contributing</h2>
+Contributions are welcome! If you'd like to improve this project, feel free to fork the repository, make your changes, and submit a pull request.
+
+<h2>Thank You</h2>
+We hope you find this application useful and enjoyable. If you have any questions or feedback, don't hesitate to reach out. 😊
