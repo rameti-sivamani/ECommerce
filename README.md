@@ -1,4 +1,4 @@
-<h1>E-Commerce Web Application</h1>
+<h1>E-Commerce Web Application ( ZipBuy Shopping )</h1>
 
 
 This project is a full-stack e-commerce web application developed using Spring Boot for the backend and React.js for the frontend. It includes CRUD operations, user authentication, and integration with SQL for database management. The application provides a seamless shopping experience for users with basic e-commerce features.
