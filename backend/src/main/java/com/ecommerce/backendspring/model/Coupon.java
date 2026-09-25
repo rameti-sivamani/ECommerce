@@ -48,8 +48,4 @@ public class Coupon {
                 ", discountPercentage=" + discountPercentage +
                 '}';
     }
-
-    public Object getCode() {
-        return couponCode;
-    }
 }

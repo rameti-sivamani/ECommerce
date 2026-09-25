@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Crew Tee">
+  <rect width="500" height="500" fill="#e5e7eb"/>
+  <path d="M150 90 L200 70 Q250 100 300 70 L350 90 L395 150 L350 175 L340 160 L340 330 L160 330 L160 160 L150 175 L105 150 Z" fill="#374151" stroke="#374151" stroke-width="4" stroke-linejoin="round" fill-opacity="0.9"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#374151">Crew Tee</text>
+</svg>

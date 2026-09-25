@@ -79,7 +79,7 @@ const Payment = () => {
         <form onSubmit={handlePaymentSubmit} className="payment-form">
           <h1 className="text-center">Payment Details</h1>
           <hr></hr>
-          <h3 className="text-center">Total Amount: ${totalPrice.toFixed(2)}</h3>
+          <h3 className="text-center">Total Amount: ₹{totalPrice.toFixed(2)}</h3>
           {error && <p className="error-message">{error}</p>}
           <div>
             <label>Card Number:</label>

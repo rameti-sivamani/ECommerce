@@ -105,11 +105,4 @@ public class Product {
                 '}';
     }
 
-    public Object getId() {
-        return productId;
-    }
-
-    public List<Gallery> getGalleries() {
-        return gallery;
-    }
 }

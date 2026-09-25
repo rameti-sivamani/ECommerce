@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, Container, Form, FormControl, Button,Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser,faHome,faShoppingCart, faThLarge, faLifeRing, faSignInAlt, faUserPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
@@ -56,7 +56,8 @@ const navigate=useNavigate();
 
             <Dropdown.Menu>
                 <Dropdown.Item onClick={()=>navigate("/products/category/menswear")}>Men's Wear</Dropdown.Item>
-                <Dropdown.Item onClick={()=>navigate("/products/category/womenswear")}>Women's Ware</Dropdown.Item>
+                <Dropdown.Item onClick={()=>navigate("/products/category/womenswear")}>Women's Wear</Dropdown.Item>
+                <Dropdown.Item onClick={()=>navigate("/products/category/kidswear")}>Kids' Wear</Dropdown.Item>
                 <Dropdown.Item onClick={()=>navigate("/products/category/kidswear")}>Kid's Ware</Dropdown.Item>
                 
             </Dropdown.Menu>

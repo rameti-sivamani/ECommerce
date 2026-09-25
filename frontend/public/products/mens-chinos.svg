@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Chinos">
+  <rect width="500" height="500" fill="#fef3c7"/>
+  <path d="M180 70 L320 70 L340 330 L270 330 L250 150 L230 330 L160 330 Z" fill="#a16207" stroke="#a16207" stroke-width="4" stroke-linejoin="round" fill-opacity="0.9"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#a16207">Chinos</text>
+</svg>

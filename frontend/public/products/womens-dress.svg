@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Summer Dress">
+  <rect width="500" height="500" fill="#fce7f3"/>
+  <path d="M210 70 L290 70 L300 140 L380 330 L120 330 L200 140 Z" fill="#be185d" stroke="#be185d" stroke-width="4" stroke-linejoin="round" fill-opacity="0.9"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#be185d">Summer Dress</text>
+</svg>

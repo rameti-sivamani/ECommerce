@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Denim Jacket">
+  <rect width="500" height="500" fill="#e0e7ff"/>
+  <path d="M150 85 L205 65 L250 120 L295 65 L350 85 L395 330 L345 330 L340 170 L340 330 L160 330 L160 170 L155 330 L105 330 Z M250 120 L250 330" fill="#3730a3" stroke="#3730a3" stroke-width="4" stroke-linejoin="round" fill-opacity="0.9"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#3730a3">Denim Jacket</text>
+</svg>

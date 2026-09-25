@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Dino Hoodie">
+  <rect width="500" height="500" fill="#dcfce7"/>
+  <path d="M185 90 Q250 30 315 90 L360 100 L400 170 L355 190 L340 170 L340 330 L160 330 L160 170 L145 190 L100 170 L140 100 Z M200 250 L300 250" fill="#15803d" stroke="#15803d" stroke-width="4" stroke-linejoin="round" fill-opacity="0.9"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#15803d">Dino Hoodie</text>
+</svg>

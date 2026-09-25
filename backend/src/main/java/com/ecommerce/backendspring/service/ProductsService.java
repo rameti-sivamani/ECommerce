@@ -1,84 +1,75 @@
 package com.ecommerce.backendspring.service;
 
 import com.ecommerce.backendspring.dto.ProductDTO;
+import com.ecommerce.backendspring.exception.ResourceNotFoundException;
 import com.ecommerce.backendspring.model.Category;
 import com.ecommerce.backendspring.model.Gallery;
-import com.ecommerce.backendspring.repository.CategoryRepository;
-import com.ecommerce.backendspring.repository.GalleryRepository;
-import com.ecommerce.backendspring.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.ecommerce.backendspring.model.Product;
+import com.ecommerce.backendspring.repository.CategoryRepository;
+import com.ecommerce.backendspring.repository.ProductRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ProductsService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private GalleryRepository galleryRepository;
-    public Product createProduct(String name, String description, double price, String categoryName, String couponId, double discount, List<String> imageUrls) {
-        // Find the category by name
-        Category category = categoryRepository.findByCategoryName(categoryName);
-        if (category == null) {
-            throw new RuntimeException("Category with name '" + categoryName + "' not found");
-        }
-
-        // Create the product and set the category
-        Product product = new Product();
-        product.setName(name);
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setCategory(category);  // Associate category
-        product.setDiscount(discount);
-
-        // Save the product
-        product = productRepository.save(product);
-
-
-        // Add gallery images
-        for (String url : imageUrls){
-            Gallery image = new Gallery();
-            image.setProduct(product);  // Set the product for the image
-            image.setImageUrl(url);     // Set the image URL
-            galleryRepository.save(image);  // Save the image in the repository
-        }
-
-        return product;
+    public ProductsService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
-//gatting all the products by the category name
-public List<ProductDTO> getProductsByCategoryName(String categoryName) {
-    List<Product> products = productRepository.findByCategoryName(categoryName);
-    return products.stream()
-            .map(ProductDTO::new)  // Convert each Product to ProductDTO
-            .collect(Collectors.toList());
-}
+    public ProductDTO createProduct(ProductDTO request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new IllegalArgumentException("Product name is required");
+        }
+        if (request.getPrice() <= 0) {
+            throw new IllegalArgumentException("Price must be greater than 0");
+        }
+        Category category = categoryRepository.findByCategoryName(request.getCategoryName());
+        if (category == null) {
+            throw new ResourceNotFoundException("Category '" + request.getCategoryName() + "' not found");
+        }
 
+        Product product = new Product();
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setDiscount(request.getDiscount());
+        product.setCategory(category);
+
+        List<Gallery> gallery = new ArrayList<>();
+        if (request.getImageUrls() != null) {
+            for (String url : request.getImageUrls()) {
+                Gallery image = new Gallery();
+                image.setProduct(product);
+                image.setImageUrl(url);
+                gallery.add(image);
+            }
+        }
+        // Gallery images are saved together with the product (cascade)
+        product.setGallery(gallery);
+
+        return new ProductDTO(productRepository.save(product));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getProductsByCategoryName(String categoryName) {
+        return productRepository.findByCategoryName(categoryName).stream()
+                .map(ProductDTO::new)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .map(ProductDTO::new)
+                .toList();
     }
-
-    private ProductDTO convertToDTO(Product product) {
-        List<String> galleryUrls = product.getGalleries().stream()
-                .map(Gallery::getImageUrl)
-                .collect(Collectors.toList());
-
-        return new ProductDTO(
-                product.getId(),
-                product.getProductId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice(),
-                galleryUrls
-        );
-    }
-
 }

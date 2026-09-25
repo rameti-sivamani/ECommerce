@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap CSS
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "../styles/Form.css";
+import { API_BASE_URL } from "../config";
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -55,8 +58,18 @@ const RegistrationForm = () => {
     // Validate Date of Birth (Must be at least 18 years old)
     const birthDate = new Date(formData.dateOfBirth);
     const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
-   
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const birthdayNotReached =
+      today.getMonth() < birthDate.getMonth() ||
+      (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate());
+    if (birthdayNotReached) {
+      age -= 1;
+    }
+    if (!formData.dateOfBirth || Number.isNaN(age)) {
+      errors.push("Please enter your date of birth.");
+    } else if (age < 18) {
+      errors.push("You must be at least 18 years old to register.");
+    }
 
     setErrorMessages(errors);
     return errors.length === 0;
@@ -80,18 +93,20 @@ const RegistrationForm = () => {
       active: 1,
     };
 
-    fetch("http://localhost:8080/api/register", {
+    fetch(`${API_BASE_URL}/api/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     })
-      .then(response => {
+      .then(async (response) => {
         if (response.ok) {
-          alert("Registration successful!");
+          alert("Registration successful! Please log in.");
+          navigate("/login");
         } else {
-          alert("User Already exists with this Email Address");
+          const body = await response.json().catch(() => ({}));
+          setErrorMessages([body.message || "Registration failed. Please try again."]);
         }
       })
       .catch(error => {

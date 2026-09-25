@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/MensDemo.css";
-import "../styles/Cart.css"
+import "../styles/Cart.css";
+import { API_BASE_URL } from "../config";
+
+const MAX_QUANTITY = 5;
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -17,7 +20,7 @@ const Cart = () => {
     const customerEmail = localStorage.getItem("userEmail");
     if (customerEmail) {
       axios
-        .get(`http://localhost:8080/api/cart/products/${customerEmail}`)
+        .get(`${API_BASE_URL}/api/cart/products/${encodeURIComponent(customerEmail)}`)
         .then((response) => {
           if (Array.isArray(response.data)) {
             setCartItems(response.data);
@@ -35,7 +38,7 @@ const Cart = () => {
           setLoading(false);
         });
     } else {
-      setError("No customer email found in session storage");
+      setError("Please log in to see your cart.");
       setLoading(false);
     }
   }, []);
@@ -72,32 +75,23 @@ const Cart = () => {
   if (error) {
     return <div className="text-center">{error}</div>;
   }
-// Increment the quantity of a product, with a maximum limit of 5
-const incrementQuantity = (index) => {
-  const updatedItems = [...cartItems];
-  if (updatedItems[index].quantity < 5) {
-    updatedItems[index].quantity += 1;
-    setCartItems(updatedItems);
-    calculateTotalPrice(updatedItems);
-    axios.put(`http://localhost:8080/api/cart/update`, {
-      productId: updatedItems[index].productId, 
-      quantity: updatedItems[index].quantity
-    }).catch((error) => console.error('Error updating cart:', error));
+// Change the quantity of a product. Quantity 0 removes it from the cart.
+const changeQuantity = (productId, quantity) => {
+  if (quantity > MAX_QUANTITY) {
+    return;
   }
-};
-
-// Decrement the quantity of a product, with a minimum limit of 1
-const decrementQuantity = (index) => {
-  const updatedItems = [...cartItems];
-  if (updatedItems[index].quantity > 0) {
-    updatedItems[index].quantity -= 1;
-    setCartItems(updatedItems);
-    calculateTotalPrice(updatedItems);
-    axios.put(`http://localhost:8080/api/cart/update`, {
-      productId: updatedItems[index].productId, 
-      quantity: updatedItems[index].quantity
-    }).catch((error) => console.error('Error updating cart:', error));
-  }
+  const updatedItems = cartItems
+    .map((item) => (item.productId === productId ? { ...item, quantity } : item))
+    .filter((item) => item.quantity > 0);
+  setCartItems(updatedItems);
+  calculateTotalPrice(updatedItems);
+  axios
+    .put(`${API_BASE_URL}/api/cart/update`, {
+      customerEmail: localStorage.getItem("userEmail"),
+      productId,
+      quantity,
+    })
+    .catch(() => setError("Could not update your cart. Please refresh the page."));
 };
   return (
     <div className="cart-container">
@@ -105,10 +99,10 @@ const decrementQuantity = (index) => {
         <h1 className="text-center">Cart Items</h1>
         <div className="product-list" style={{ minHeight: "80vh" }}>
           {cartItems.length > 0 ? (
-            cartItems.map((item, index) => (
+            cartItems.map((item) => (
               <div key={item.productId} className="product-card">
                 <img
-                  src={item.galleryUrl || "default-image.jpg"}
+                  src={item.galleryUrl || "/products/placeholder.svg"}
                   alt={item.productName}
                   className="product-image"
                 />
@@ -116,11 +110,12 @@ const decrementQuantity = (index) => {
                   <h2>{item.productName.trim()}</h2>
                   <p>{item.productDescription}</p>
                   <div className="product-price">
-                    ${item.productPrice.toFixed(2)} x {item.quantity}
-                  
+                    ₹{item.productPrice.toFixed(2)} x {item.quantity}
                   </div>
-                  <button className="bg-success"  onClick={() => incrementQuantity(index)} disabled={item.quantity >= 5}>+</button>
-                      <button className="bg-alert"  onClick={() => decrementQuantity(index)} disabled={item.quantity <= 0}>-</button>                 
+                  <button className="bg-success" onClick={() => changeQuantity(item.productId, item.quantity + 1)} disabled={item.quantity >= MAX_QUANTITY}>+</button>
+                  <button className="bg-alert" onClick={() => changeQuantity(item.productId, item.quantity - 1)}>
+                    {item.quantity === 1 ? "Remove" : "-"}
+                  </button>
                 </div>
               </div>
             ))
@@ -133,7 +128,7 @@ const decrementQuantity = (index) => {
       <div className="cart-summary" style={{ width: "30%", float: "right", padding: "20px" }}>
         <h2 className="text-center">Summary</h2>
         <hr/>
-        <h3>Total Price: ${totalPrice.toFixed(2)}</h3>
+        <h3>Total Price: ₹{totalPrice.toFixed(2)}</h3>
         <h4>Delivery Address:</h4>
         <p>{customerAddress}</p>
         <button className="buy-now-button" onClick={handleBuyNow}>

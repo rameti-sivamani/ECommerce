@@ -2,7 +2,6 @@ package com.ecommerce.backendspring.model;
 
 import jakarta.persistence.*;
 
-import java.util.Optional;
 
 @Entity
 public class Cart {
@@ -30,8 +29,8 @@ public class Cart {
         this.id = id;
     }
 
-    public Optional<Customer> getCustomer() {
-        return Optional.ofNullable(customer);
+    public Customer getCustomer() {
+        return customer;
     }
 
     public void setCustomer(Customer customer) {
@@ -52,10 +51,6 @@ public class Cart {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public void setCustomer(Optional<Customer> customer) {
-        this.customer = customer.orElse(null);
     }
 
     @Override
