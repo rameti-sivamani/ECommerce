@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap CSS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import "../styles/Form.css"
+import { API_BASE_URL } from "../config";
 const LoginForm = ({ onLogin }) => {
   const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const LoginForm = ({ onLogin }) => {
     e.preventDefault(); // Prevent the default form submission
 
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
+      const response = await axios.post(`${API_BASE_URL}/api/login`, {
         email: formData.email,
         password: formData.password,
       }, {

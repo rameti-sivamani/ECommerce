@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Cotton Kurta">
+  <rect width="500" height="500" fill="#ffedd5"/>
+  <path d="M190 70 L250 95 L310 70 L360 100 L390 180 L350 190 L335 150 L350 340 L150 340 L165 150 L150 190 L110 180 L140 100 Z" fill="#c2410c" stroke="#c2410c" stroke-width="4" stroke-linejoin="round" fill-opacity="0.9"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#c2410c">Cotton Kurta</text>
+</svg>

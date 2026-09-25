@@ -1,13 +1,21 @@
 package com.ecommerce.backendspring.dto;
 
 public class CartDTO {
+    private Long productId;
     private String productName;
     private String productDescription;
     private Double productPrice;
-    private String galleryUrl; // Adjust based on your product image structure
+    private String galleryUrl;
     private Integer quantity;
 
-    // Getters and Setters
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
     public String getProductName() {
         return productName;
     }

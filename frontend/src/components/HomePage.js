@@ -1,24 +1,18 @@
-// HomePage.js
-import React from 'react';
-import SwiperDemo from './SwiperDemo';
-import MensDemo from './MensDemo';
-import WomensDemo from './WomensDemo';
-import KidsDemo from './KidsDemo';
-import "../styles/home.css"
+import React from "react";
+import SwiperDemo from "./SwiperDemo";
+import ProductList from "./ProductList";
+import { CATEGORIES } from "../config";
+import "../styles/home.css";
+
+const PREVIEW_SIZE = 3;
 
 const HomePage = () => {
   return (
     <div className="home">
-      <header className="header">
-        {/* Header content */}
-      </header>
       <SwiperDemo />
-      <MensDemo />
-      <WomensDemo />
-      <KidsDemo />
-      <footer className="footer">
-        {/* Footer content */}
-      </footer>
+      <ProductList category={CATEGORIES.mens} limit={PREVIEW_SIZE} />
+      <ProductList category={CATEGORIES.womens} limit={PREVIEW_SIZE} />
+      <ProductList category={CATEGORIES.kids} limit={PREVIEW_SIZE} />
     </div>
   );
 };

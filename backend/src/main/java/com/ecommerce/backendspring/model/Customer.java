@@ -1,5 +1,6 @@
 package com.ecommerce.backendspring.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -12,10 +13,13 @@ public class Customer{
     private String id;
     private String first_name;
     private String last_name;
+    @Column(unique = true)
     private String email;
     private String phone_number;
     private String date_of_birth;
     private String gender;
+    // Accepted on registration but never written to API responses
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private LocalDateTime registered_at;
     private boolean active;
@@ -114,7 +118,6 @@ public class Customer{
                 ", phone_number='" + phone_number + '\'' +
                 ", date_of_birth='" + date_of_birth + '\'' +
                 ", gender='" + gender + '\'' +
-                ", password='" + password + '\'' +
                 ", registered_at='" + registered_at + '\'' +
                 ", active=" + active +
                 '}';

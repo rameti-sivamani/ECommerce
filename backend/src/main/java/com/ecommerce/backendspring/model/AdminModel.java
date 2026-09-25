@@ -1,5 +1,6 @@
 package com.ecommerce.backendspring.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -14,6 +15,8 @@ public class AdminModel {
     private String last_name;
     private String email;
     private String phone_number;
+    // Accepted on registration but never written to API responses
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String profile_img;
     private LocalDateTime registered_at;
@@ -101,7 +104,6 @@ public class AdminModel {
                 ", email='" + email + '\'' +
                 ", phone_number='" + phone_number + '\'' +
                 ",profile_img='" + profile_img + '\'' +
-                ", password='" + password + '\'' +
                 ", registered_at='" + registered_at + '\'' +
                 '}';
     }

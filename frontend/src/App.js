@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes ,Navigate} from 'react-router-dom';
 import MyNavbar from './components/Navbar';
 import RegistrationForm from './components/Register';
@@ -8,32 +8,21 @@ import Profile from './components/Profile';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
 import Payment from './components/Payment';
-import MensWear from './components/MensWear';
-import WomensWear from './components/WomensWear';
 import Help from './components/Help';
 import NotFound from './components/NotFound';
-import KidsWear from './components/KidsWear';
+import ProductList from './components/ProductList';
+import { CATEGORIES } from './config';
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userEmail, setUserEmail] = useState('');
+    // Read the saved login before the first render, so deep links and page refreshes
+    // are not redirected to the login page.
+    const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(localStorage.getItem('userEmail')));
 
-    useEffect(() => {
-        const email = localStorage.getItem('userEmail');
-         // Retrieve email from local storage
-        if (email) {
-            setIsLoggedIn(true);
-            setUserEmail(email);
-        }
-    }, []);
-
-    const handleLogin = (email) => {
+    const handleLogin = () => {
         setIsLoggedIn(true);
-        setUserEmail(email);
     };
 
     const handleLogout = () => {
         setIsLoggedIn(false);
-        setUserEmail('');
        // Clear email from session storage
        localStorage.removeItem('userEmail');
     };
@@ -47,9 +36,9 @@ const App = () => {
           <>
             <Route path="/" element={<HomePage />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/products/category/menswear" element={<MensWear />} />
-            <Route path="/products/category/womenswear" element={<WomensWear />} />
-            <Route path="/products/category/Kidswear" element={<KidsWear />} />
+            {Object.entries(CATEGORIES).map(([key, category]) => (
+              <Route key={key} path={category.path} element={<ProductList category={category} />} />
+            ))}
 
             <Route path="/cart" element={<Cart />} />
             <Route path="/help" element={<Help />} />
@@ -65,11 +54,11 @@ const App = () => {
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
             {/* Redirect non-logged in users trying to access protected routes to login */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/profile" element={<Navigate to="/login" replace />} />
-            <Route path="/products/category/menswear" element={<Navigate to="/login" replace />} />
-            <Route path="/products/category/womenswear" element={<Navigate to="/login" replace />} />
+            <Route path="/products/category/*" element={<Navigate to="/login" replace />} />
             <Route path="/cart" element={<Navigate to="/login" replace />} />
+            <Route path="/cart/buy/payment" element={<Navigate to="/login" replace />} />
+            <Route path="/help" element={<Navigate to="/login" replace />} />
           </>
         )}
         <Route path="*" element={<NotFound />} />

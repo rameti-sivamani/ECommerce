@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Profile.css"
 import { Col, Row } from "react-bootstrap";
+import { API_BASE_URL } from "../config";
 
 const Profile = () => {
   const [customer, setCustomer] = useState(null);
@@ -15,7 +16,7 @@ const Profile = () => {
         try {
           // Change the URL to include the email as a query parameter
           const response = await axios.get(
-            `http://localhost:8080/api/customer/profile?email=${email}`
+            `${API_BASE_URL}/api/customer/profile?email=${encodeURIComponent(email)}`
           );
           console.log("Response from API: ", response); // Log the response object
           setCustomer(response.data); // Update state with the received customer data

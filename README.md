@@ -1,65 +1,132 @@
-<h1>E-Commerce Web Application ( ZipBuy Shopping )</h1>
+# ZipBuy — Full-Stack E-Commerce App
 
+An online clothing store with a **Spring Boot (Java 21)** REST API and a **React** frontend.
+Customers can register, log in, browse products by category, manage a shopping cart and check
+out.
 
-This project is a full-stack e-commerce web application developed using Spring Boot for the backend and React.js for the frontend. It includes CRUD operations, user authentication, and integration with SQL for database management. The application provides a seamless shopping experience for users with basic e-commerce features.
+![ZipBuy home page](docs/screenshots/home.png)
 
-<h2> Installation and Setup</h2>
-<h3>Prerequisites</h3>
-<ol>
-  <li>Java 17+</li>
-  <li>Node.js(v16+ recommended</li>
-  <li>MySQL</li>
-</ol>
-<h3>Steps to Rin Locally</h3>
-<h4>Backend</h4>
-<ol>
-  <li>Clone the repository and navigate to the backend folder.</li>
-  <code>cd ./backend</code>
-  <li>Configure the application.properties file with your database credentials.</li>
-  <li>Run the backend using the maven terminal</li>
-<code> ./mvnw spring-boot:run</code> 
-<center> or</center>
-<p>click on run button by navigating the springboot application java file available at <code>./src/main/java/com.ecommerce.backend/backendApplication</code></p>
-<li>API will availble at <code>http://localhost:8080</code></li>
-</ol>
+| Category page                                   | Cart                                | Registration                                   |
+| ----------------------------------------------- | ----------------------------------- | ---------------------------------------------- |
+| ![Category page](docs/screenshots/category.png) | ![Cart](docs/screenshots/cart.png) | ![Registration](docs/screenshots/register.png) |
 
-<h4>Frontend</h4>
-<ol>
-  <li>Navigate to the frontend folder.</li>
-  <code>cd ../frontend</code>
-  <li>Install dependencies:</li>
-  <code>npm install</code>
-  <li>Run the React Development Server</li>
-  <code>npm start</code>
-<li>Frontend will be available at http://localhost:3000.</li>
-</ol>
+## Features
 
+- **Accounts**: registration with validation, login, and a profile page. Passwords are hashed
+  with BCrypt and never returned by the API.
+- **Catalogue**: products grouped into men's, women's and kids' wear, with a home page preview of
+  each category.
+- **Cart**: add products, change quantities (up to 5 per item) and remove items. The cart is
+  stored on the server, so it survives page reloads.
+- **Checkout**: order summary and a payment form with card validation.
+- **Demo data**: an empty database is filled with sample categories and products on first start,
+  so the shop works right after cloning.
 
-<h2>Screenshots</h2>
-<li>Home Page After Login</li>
-<br>
+## Tech stack
 
-![Screenshot 2024-09-27 103316](https://github.com/user-attachments/assets/4e063e98-8f00-4aff-81eb-5c1c7162ec16)
+| Layer    | Technologies                                                                  |
+| -------- | ----------------------------------------------------------------------------- |
+| Backend  | Java 21, Spring Boot 3.3 (Web, Data JPA, Validation), Spring Security Crypto |
+| Database | MySQL 8 (H2 in tests)                                                         |
+| Frontend | React 18, React Router 6, React Bootstrap, Axios, Swiper                      |
+| Testing  | JUnit 5, Spring MockMvc, Jest, React Testing Library                          |
+| DevOps   | Maven wrapper, Docker Compose, GitHub Actions                                 |
 
+## Architecture
 
-<li>Men's Wear Page</li>
-<br>
+```mermaid
+flowchart LR
+  Browser[React app<br/>localhost:3000] -->|REST / JSON| API[Spring Boot API<br/>localhost:8080]
+  API --> Services[Services<br/>Customer · Products · Cart]
+  Services --> Repos[Spring Data JPA repositories]
+  Repos --> DB[(MySQL)]
+```
 
-![Screenshot 2024-09-27 102159](https://github.com/user-attachments/assets/23e6f51e-40b3-472e-8dfb-4a30b215acc0)
+```text
+backend/src/main/java/com/ecommerce/backendspring/
+├── controller/   # REST endpoints
+├── service/      # Business logic: registration and login, catalogue, cart
+├── repository/   # Spring Data JPA repositories
+├── model/        # JPA entities: Customer, Product, Category, Gallery, Cart, Coupon
+├── dto/          # Request and response objects
+├── exception/    # Typed exceptions and the global error handler
+└── config/       # CORS and password hashing
 
-<li>Women's Wear</li>
-<br>
+frontend/src/
+├── components/   # Pages and UI: ProductList, Cart, Login, Register, Profile, Payment …
+├── config.js     # API base URL and category definitions
+└── styles/
+```
 
-![Screenshot 2024-09-27 102225](https://github.com/user-attachments/assets/dfed2def-4739-4f77-8a5c-4cf25325ee8a)
+## Getting started
 
-<li>Kid's Wear</li>
-<br>
+### Option 1: Docker (recommended)
 
-![Screenshot 2024-09-27 102243](https://github.com/user-attachments/assets/707a7c54-5e34-4cd0-b42f-a24265047d32)
+Requires Docker.
 
+```bash
+docker compose up --build
+```
 
-<h2>Contributing</h2>
-Contributions are welcome! If you'd like to improve this project, feel free to fork the repository, make your changes, and submit a pull request.
+Then open http://localhost:3000. This starts MySQL, the API and the React app.
 
-<h2>Thank You</h2>
-We hope you find this application useful and enjoyable. If you have any questions or feedback, don't hesitate to reach out. 😊
+### Option 2: Run locally
+
+Requires Java 21, Node.js 18+ and a MySQL database.
+
+```bash
+# Backend
+cd backend
+export DB_URL=jdbc:mysql://localhost:3306/e_commerce DB_USERNAME=<user> DB_PASSWORD=<password>
+./mvnw spring-boot:run            # API at http://localhost:8080
+
+# Frontend (in a second terminal)
+cd frontend
+npm install
+npm start                         # app at http://localhost:3000
+```
+
+| Environment variable | Default                                  | Used for                          |
+| -------------------- | ---------------------------------------- | --------------------------------- |
+| `DB_URL`             | `jdbc:mysql://localhost:3306/e_commerce` | Database connection               |
+| `DB_USERNAME`        | `zipbuy`                                 | Database user                     |
+| `DB_PASSWORD`        | `zipbuy`                                 | Database password                 |
+| `FRONTEND_URL`       | `http://localhost:3000`                  | Origin allowed by CORS            |
+| `SEED_DEMO_DATA`     | `true`                                   | Insert demo products              |
+| `REACT_APP_API_URL`  | `http://localhost:8080`                  | API address used by the React app |
+
+## API
+
+| Method | Path                                                | Description                         |
+| ------ | --------------------------------------------------- | ----------------------------------- |
+| POST   | `/api/register`                                     | Create a customer account           |
+| POST   | `/api/login`                                        | Check email and password            |
+| GET    | `/api/customer/profile?email=`                      | Customer profile                    |
+| GET    | `/api/products/products`                            | All products                        |
+| GET    | `/api/products/category/{name}`                     | Products in a category              |
+| POST   | `/api/products/create`                              | Add a product                       |
+| GET    | `/api/cart/products/{email}`                        | Items in a customer's cart          |
+| POST   | `/api/cart/add?customerEmail=&productId=&quantity=` | Add a product to the cart           |
+| PUT    | `/api/cart/update`                                  | Set a quantity (0 removes the item) |
+| POST   | `/api/cart/remove?customerEmail=&productId=`        | Remove a product from the cart      |
+
+Errors are returned as JSON with a matching status code, for example
+`{"success": false, "status": 404, "message": "Product not found: 99"}`.
+
+## Testing
+
+```bash
+cd backend && ./mvnw test                     # API integration tests (H2, no MySQL needed)
+cd frontend && npm test -- --watchAll=false   # React component tests
+```
+
+The backend tests cover registration and login (including that passwords are hashed and never
+returned), duplicate emails, product listing, and the full cart flow. The frontend tests cover
+loading products, the category preview, and adding to the cart.
+
+## Roadmap
+
+- Token-based authentication (JWT) instead of keeping the email in the browser
+- Order history and saved delivery addresses
+- Admin screens for managing products
+- Payment gateway integration

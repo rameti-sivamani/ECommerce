@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Oxford Shirt">
+  <rect width="500" height="500" fill="#dbeafe"/>
+  <path d="M150 90 L200 70 Q250 95 300 70 L350 90 L400 160 L360 185 L340 160 L340 330 L160 330 L160 160 L140 185 L100 160 Z M250 95 L250 330" fill="#1d4ed8" stroke="#1d4ed8" stroke-width="4" stroke-linejoin="round" fill-opacity="0.9"/>
+  <text x="250" y="420" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#1d4ed8">Oxford Shirt</text>
+</svg>
